@@ -1,6 +1,7 @@
 package com.psai.podcastrestAPI.controllers;
 
 import com.psai.podcastrestAPI.Podcast;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,14 +14,18 @@ public class PodcastRestController {
     }
 
     @GetMapping("/{id}")
-    public Podcast getPodcast(@PathVariable int id){
+    public ResponseEntity<Podcast> getPodcast(@PathVariable int id){
+        if(id > 1000){
+            return ResponseEntity.notFound().build();
+        }
+
         Podcast result = new Podcast();
-        
+
         result.setId(id);
         result.setName("Meu podcast");
         result.setUrl("http://www.meupodcast.com.br");
 
-        return result;
+        return ResponseEntity.ok(result);
     }
 
 }
